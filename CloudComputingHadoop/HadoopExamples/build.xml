@@ -1,0 +1,36 @@
+<project name="Hadoop Examples" default="dist" basedir=".">
+	<property name="src.dir" location="${basedir}/src/main/java"/>
+	<property name="build.dir" location="${basedir}/build"/>
+	<property name="dist.dir" location="${basedir}/dist"/>
+	
+	<property name="hadoop.dir" location="${basedir}/hadoop"/>
+	<property name="hadoop.lib.dir" location="${hadoop.dir}/lib"/>
+
+	
+	<target name="init">
+		<tstamp/>
+		<mkdir dir="${build.dir}"/>
+	</target>
+	
+	<target name="build" depends="init">
+		<echo message="${java.class.path}"/>
+		<javac srcdir="${src.dir}" destdir="${build.dir}" debug="on">
+			<classpath>
+				<fileset dir="${hadoop.dir}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+	
+	<target name="dist" depends="build">
+		<mkdir dir="${dist.dir}"/>
+		<jar destfile="${dist.dir}/HadoopExamples.jar" basedir="${build.dir}"/>
+	</target>
+	
+
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+		<delete dir="${dist.dir}"/>
+	</target>
+</project>
